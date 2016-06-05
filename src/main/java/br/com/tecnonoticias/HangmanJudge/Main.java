@@ -45,7 +45,7 @@ class Main {
 
 		try {
 			FileInputStream entrada;
-			entrada = new FileInputStream("input");
+			entrada = new FileInputStream("input1");
 			InputStreamReader entradaFormatada = new InputStreamReader(entrada);
 			BufferedReader entradaString = new BufferedReader(entradaFormatada);
 
@@ -63,7 +63,7 @@ class Main {
 
 					linha = entradaString.readLine();
 
-					String result = Main.forca(judge, linha);
+					String result = Main.forca(judge, linha, size);
 					System.out.println("Round " + round.toString());
 					System.out.println(result);
 				}
@@ -81,21 +81,22 @@ class Main {
 	static String retiraRepet(String retirar){
 		String[] name = retirar.split("");
 		String retira = "";
-		for (int i = 0; i < retirar.length()-1; i++) {
-			
-				if (name[i].equals(name[i+1])) {
-//					name[j] = "";
-				}else{
-					retira += name[i];
+		
+		for (int i = 0; i < retirar.length(); i++) {
+			for (int j = i+1; j < retirar.length(); j++) {
+				if (name[i].equals(name[j])) {
+					name[j] = "";
 				}
+			}
+			retira += name[i];
 		}
 		return retira;
 	}
 
-	static String forca(Hashtable<String, Integer> judge, String line) {
+	static String forca(Hashtable<String, Integer> judge, String line, int size) {
 		String retirar = retiraRepet(line);
 		String[] name = retirar.split("");
-		int size = retirar.length();
+//		int size = retirar.length();
 		int dead = 0;
 		for (int i = 0; i < name.length; i++) {
 			
@@ -107,11 +108,11 @@ class Main {
 
 				dead = (dead + 1);
 			}
-			if (size < 0) {
+			if (size <= 0) {
 
 				return "You win.";
 
-			} else if (dead > 7) {
+			} else if (dead == 7) {
 
 				return "You lose.";
 			}
